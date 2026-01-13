@@ -14,30 +14,37 @@ This is a **Claude Code Skill** (pure documentation, no code) that enables Claud
 
 ```
 codex/
-├── SKILL.md                    # Skill definition (YAML frontmatter + quick start)
+├── SKILL.md                    # Skill definition (YAML frontmatter with hooks + quick start)
 ├── commands/                   # Command specifications
 │   ├── codex-review.md         # Code review workflow
 │   ├── codex-plan.md           # Implementation planning workflow
 │   └── codex-debug.md          # Debug/root cause analysis workflow
-└── reference/                  # Core documentation
-    ├── shared-patterns.md      # 5 core rules, 6-step workflow, PROMPT templates
-    ├── examples.md             # Real-world usage examples
-    └── troubleshooting.md      # FAQ and known limitations
+├── reference/                  # Core documentation
+│   ├── shared-patterns.md      # 5 core rules, 6-step workflow, PROMPT templates
+│   ├── examples.md             # Real-world usage examples
+│   └── troubleshooting.md      # FAQ and known limitations
+└── .github/workflows/
+    └── release.yml             # Tag-triggered release with zip packaging
 ```
+
+## SKILL.md Frontmatter
+
+The skill uses these key configurations:
+- `user-invocable: true` - Can be explicitly invoked
+- `allowed-tools` - Whitelisted tools: `mcp__codex__codex`, `Read`, `Grep`, `Glob`, `Bash(git:*)`
+- `hooks.PreToolUse` - Reminder prompt before calling Codex
 
 ## Core Collaboration Rules (Must Follow)
 
-When executing any Codex collaboration:
-
-1. **Analyze First** - Output your own preliminary analysis BEFORE calling Codex
-2. **Ask When Unclear** - Request clarification from user if information is insufficient
+1. **Analyze First** - Output preliminary analysis BEFORE calling Codex
+2. **Ask When Unclear** - Request clarification if information is insufficient
 3. **Read-Only Sandbox** - Always use `sandbox="read-only"` for `mcp__codex__codex`
 4. **Diff-Based Output** - Codex provides unified diff patches or issue lists only
 5. **Verify Conclusions** - Cross-validate Codex results, note disagreements
 
 ## 6-Step Standard Workflow
 
-All commands follow this workflow defined in `reference/shared-patterns.md`:
+All commands follow this workflow (details in `reference/shared-patterns.md`):
 
 1. Parse input parameters
 2. Gather context (read files, git diff)
@@ -58,18 +65,8 @@ mcp__codex__codex(
 )
 ```
 
-PROMPT templates for each scenario are in `reference/shared-patterns.md` under "Codex 调用模板".
+PROMPT templates are in `reference/shared-patterns.md` under "Codex 调用模板".
 
-## Command Quick Reference
+## Release Process
 
-| Scenario | Command | Key Parameters |
-|----------|---------|----------------|
-| Code Review | `/codex-review` | path, `focus=security\|perf\|style`, `session=<id>` |
-| Planning | `/codex-plan` | goal, constraints, `session=<id>` |
-| Debug | `/codex-debug` | symptom/error, `session=<id>`, uses `return_all_messages=true` |
-
-## SESSION_ID Management
-
-- New session: omit SESSION_ID
-- Continue session: pass previous SESSION_ID
-- Always output session ID at end: `Codex session: <id>`
+Push a tag (e.g., `git tag v0.1.0 && git push origin v0.1.0`) to trigger GitHub Actions workflow that creates a release with packaged zip file.
