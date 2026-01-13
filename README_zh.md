@@ -2,7 +2,7 @@
 
 > 为 Claude Code 提供 AI 驱动的代码审查、实现规划和调试功能，通过 MCP 工具与 Codex 进行深度协作。
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/cyenxchen/codex/releases)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/cyenxchen/codex-skill/releases)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 ## ✨ 功能特性
@@ -30,7 +30,7 @@ claude mcp add codex -s user --transport stdio -- uvx --from git+https://github.
 
 ```bash
 # 下载最新版本
-curl -L https://github.com/cyenxchen/codex/releases/latest/download/codex-skill-v1.0.0.zip -o codex-skill.zip
+curl -L https://github.com/cyenxchen/codex-skill/releases/latest/download/codex-skill-v1.0.0.zip -o codex-skill.zip
 
 # 解压到 Claude skills 目录
 unzip codex-skill.zip -d ~/.claude/skills/codex
@@ -39,7 +39,7 @@ unzip codex-skill.zip -d ~/.claude/skills/codex
 ls ~/.claude/skills/codex/SKILL.md
 ```
 
-或从 [Releases](https://github.com/cyenxchen/codex/releases) 手动下载。
+或从 [Releases](https://github.com/cyenxchen/codex-skill/releases) 手动下载。
 
 ### 方式二：克隆仓库
 
@@ -47,7 +47,7 @@ ls ~/.claude/skills/codex/SKILL.md
 
 ```bash
 # 克隆仓库
-git clone https://github.com/cyenxchen/codex.git
+git clone https://github.com/cyenxchen/codex-skill.git
 
 # 创建软链接（使用绝对路径）
 ln -s "$(pwd)/codex" ~/.claude/skills/codex

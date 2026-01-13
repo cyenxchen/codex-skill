@@ -2,7 +2,7 @@
 
 > A Claude Code skill for AI-powered code review, implementation planning, and debugging through deep collaboration with Codex via MCP tools.
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/cyenxchen/codex/releases)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/cyenxchen/codex-skill/releases)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 ## ✨ Features
@@ -30,7 +30,7 @@ Download the latest release and extract to your skills directory.
 
 ```bash
 # Download latest release
-curl -L https://github.com/cyenxchen/codex/releases/latest/download/codex-skill-v1.0.0.zip -o codex-skill.zip
+curl -L https://github.com/cyenxchen/codex-skill/releases/latest/download/codex-skill-v1.0.0.zip -o codex-skill.zip
 
 # Extract to Claude skills directory
 unzip codex-skill.zip -d ~/.claude/skills/codex
@@ -39,7 +39,7 @@ unzip codex-skill.zip -d ~/.claude/skills/codex
 ls ~/.claude/skills/codex/SKILL.md
 ```
 
-Or manually download from [Releases](https://github.com/cyenxchen/codex/releases).
+Or manually download from [Releases](https://github.com/cyenxchen/codex-skill/releases).
 
 ### Option 2: Clone Repository
 
@@ -47,7 +47,7 @@ Best for developers who want to contribute or customize.
 
 ```bash
 # Clone the repository
-git clone https://github.com/cyenxchen/codex.git
+git clone https://github.com/cyenxchen/codex-skill.git
 
 # Create symlink (using absolute path)
 ln -s "$(pwd)/codex" ~/.claude/skills/codex
