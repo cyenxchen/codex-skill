@@ -4,7 +4,7 @@
 
 > A Claude Code skill for AI-powered code review, implementation planning, and debugging through deep collaboration with Codex via MCP tools.
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/cyenxchen/codex-skill/releases)
+[![Version](https://img.shields.io/badge/version-0.2.0-blue.svg)](https://github.com/cyenxchen/codex-skill/releases)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 ## ✨ Features
@@ -32,7 +32,7 @@ Download the latest release and extract to your skills directory.
 
 ```bash
 # Download latest release
-curl -L https://github.com/cyenxchen/codex-skill/releases/latest/download/codex-skill-v1.0.0.zip -o codex-skill.zip
+curl -L https://github.com/cyenxchen/codex-skill/releases/latest/download/codex-skill-v0.2.0.zip -o codex-skill.zip
 
 # Extract to Claude skills directory
 unzip codex-skill.zip -d ~/.claude/skills/codex

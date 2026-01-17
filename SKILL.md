@@ -1,6 +1,6 @@
 ---
 name: codex
-description: Collaborate with Codex AI for code review, implementation planning, and debugging. Supports plan context from .claude/plans/ for context-aware collaboration. Provides guidance for effective Claude-Codex workflow using read-only analysis and diff-based suggestions.
+description: Collaborate with Codex AI for code review, planning, and debugging. Use when: review/audit code, plan/design features, debug/locate bugs. Triggers: codex, review, audit, 审查, plan, 规划, debug, 定位, analyze. Supports .claude/plans/ context.
 version: 0.2.0
 user-invocable: true
 allowed-tools:
@@ -14,7 +14,7 @@ hooks:
     - matcher: "mcp__codex__codex"
       hooks:
         - type: prompt
-          prompt: "调用 Codex 前请确保：1) 已输出初步分析 2) 使用 sandbox='read-only' 3) 若有计划文件，已包含在 PROMPT 中"
+          prompt: "Before calling Codex: 1) Output preliminary analysis 2) Use sandbox='read-only' 3) Include plan path if relevant | 调用前确保：1) 已输出初步分析 2) sandbox='read-only' 3) 若有计划文件已包含路径"
 ---
 
 # Codex 协作指南
@@ -37,6 +37,12 @@ hooks:
 
 *详细说明见 reference/shared-patterns.md*
 
+## 计划文件自动检测（必须执行）
+
+在开始 Codex 协作任务前，自动检测 `.claude/plans/*.md` 中的相关计划文件并传递给 Codex。
+
+**详细检测步骤见：** `reference/shared-patterns.md` 的"计划文档集成"章节
+
 ## 场景识别
 
 根据用户意图自动选择合适的协作模式：
@@ -49,14 +55,18 @@ hooks:
 
 ## 工作流程（简要）
 
-Codex 协作遵循标准的6步工作流程：
+Codex 协作遵循以下工作流程：
 
-1. **确认任务类型** - 分析用户意图（代码审查/需求分析/问题定位）
-2. **收集上下文** - 获取相关文件、错误信息、需求描述
-3. **初步分析**（必须）- 输出你的初步判断
-4. **调用 Codex** - 使用 `mcp__codex__codex` 工具
-5. **质疑与验证** - 审视 Codex 结论
-6. **输出结论** - 整合分析结果
+1. **检测计划文件**（必须）
+   - 使用 Glob 搜索 `.claude/plans/*.md`
+   - 读取最近修改的文件，判断是否与当前任务相关
+   - 若相关，记录路径待传递给 Codex
+2. **确认任务类型** - 分析用户意图（代码审查/需求分析/问题定位）
+3. **收集上下文** - 获取相关文件、错误信息、需求描述
+4. **初步分析**（必须）- 输出你的初步判断
+5. **调用 Codex** - 使用 `mcp__codex__codex` 工具，**若有相关计划则在 PROMPT 中包含计划文件路径**
+6. **质疑与验证** - 审视 Codex 结论
+7. **输出结论** - 整合分析结果
 
 **完整的工作流程和 Codex 调用模板详见：**`reference/shared-patterns.md`
 

@@ -4,7 +4,7 @@
 
 > 为 Claude Code 提供 AI 驱动的代码审查、实现规划和调试功能，通过 MCP 工具与 Codex 进行深度协作。
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/cyenxchen/codex-skill/releases)
+[![Version](https://img.shields.io/badge/version-0.2.0-blue.svg)](https://github.com/cyenxchen/codex-skill/releases)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 ## ✨ 功能特性
@@ -32,7 +32,7 @@ claude mcp add codex -s user --transport stdio -- uvx --from git+https://github.
 
 ```bash
 # 下载最新版本
-curl -L https://github.com/cyenxchen/codex-skill/releases/latest/download/codex-skill-v1.0.0.zip -o codex-skill.zip
+curl -L https://github.com/cyenxchen/codex-skill/releases/latest/download/codex-skill-v0.2.0.zip -o codex-skill.zip
 
 # 解压到 Claude skills 目录
 unzip codex-skill.zip -d ~/.claude/skills/codex
