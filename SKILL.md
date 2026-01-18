@@ -1,8 +1,22 @@
 ---
 name: codex
-description: Collaborate with Codex AI for code review, planning, and debugging. Use when: review/audit code, plan/design features, debug/locate bugs. Triggers: codex, review, audit, 审查, plan, 规划, debug, 定位, analyze. Supports .claude/plans/ context.
+description: Collaborate with Codex AI for code review, planning, and debugging. Use when: review/audit code, plan/design features, debug/locate bugs. Supports .claude/plans/ context.
 version: 0.2.0
 user-invocable: true
+triggers:
+  - codex
+  - review
+  - audit
+  - 审查
+  - plan
+  - 规划
+  - debug
+  - 定位
+  - analyze
+examples:
+  - "帮我用 codex 审查 src/app.py"
+  - "和 codex 一起规划登录功能"
+  - "让 codex 分析这个 TypeError"
 allowed-tools:
   - mcp__codex__codex
   - Read
@@ -14,7 +28,7 @@ hooks:
     - matcher: "mcp__codex__codex"
       hooks:
         - type: prompt
-          prompt: "Before calling Codex: 1) Output preliminary analysis 2) Use sandbox='read-only' 3) Include plan path if relevant | 调用前确保：1) 已输出初步分析 2) sandbox='read-only' 3) 若有计划文件已包含路径"
+          prompt: "STOP! Verify before calling Codex: 1) Did you Glob('.claude/plans/*.md') AND Glob('~/.claude/plans/*.md')? 2) If plans found, did you Read and assess relevance? 3) Is relevant plan path in PROMPT? 4) Did you output preliminary analysis? 5) sandbox='read-only'? | 停！调用前验证：1) 是否已执行 Glob('.claude/plans/*.md') 和 Glob('~/.claude/plans/*.md')？2) 若有计划，是否已 Read 判断相关性？3) 若相关，PROMPT 是否包含计划路径？4) 是否已输出初步分析？5) sandbox='read-only'？"
 ---
 
 # Codex 协作指南
@@ -29,17 +43,22 @@ hooks:
 
 ## 核心规则（简要）
 
-1. **先自检再调用** - 必须先输出初步分析，再调用 Codex
-2. **信息不足时提问** - 信息不明确时先追问用户
-3. **安全调用** - 使用 `sandbox="read-only"`
-4. **只读输出** - 仅给出 unified diff patch 或建议
-5. **质疑验证** - 交叉验证 Codex 结论
+1. **计划检测优先** - 调用前**必须**检测 `.claude/plans/*.md` 和 `~/.claude/plans/*.md`
+2. **先自检再调用** - 必须先输出初步分析，再调用 Codex
+3. **信息不足时提问** - 信息不明确时先追问用户
+4. **安全调用** - 使用 `sandbox="read-only"`
+5. **只读输出** - 仅给出 unified diff patch 或建议
+6. **质疑验证** - 交叉验证 Codex 结论
 
 *详细说明见 reference/shared-patterns.md*
 
 ## 计划文件自动检测（必须执行）
 
-在开始 Codex 协作任务前，自动检测 `.claude/plans/*.md` 中的相关计划文件并传递给 Codex。
+在开始 Codex 协作任务前，**必须**按以下顺序检测计划文件：
+1. 项目级：`Glob('.claude/plans/*.md')`
+2. 全局级：`Glob('~/.claude/plans/*.md')`
+
+若找到计划文件，Read 最近修改的文件判断与当前任务的相关性，相关则传递给 Codex。
 
 **详细检测步骤见：** `reference/shared-patterns.md` 的"计划文档集成"章节
 
@@ -57,16 +76,23 @@ hooks:
 
 Codex 协作遵循以下工作流程：
 
-1. **检测计划文件**（必须）
-   - 使用 Glob 搜索 `.claude/plans/*.md`
-   - 读取最近修改的文件，判断是否与当前任务相关
-   - 若相关，记录路径待传递给 Codex
-2. **确认任务类型** - 分析用户意图（代码审查/需求分析/问题定位）
-3. **收集上下文** - 获取相关文件、错误信息、需求描述
-4. **初步分析**（必须）- 输出你的初步判断
-5. **调用 Codex** - 使用 `mcp__codex__codex` 工具，**若有相关计划则在 PROMPT 中包含计划文件路径**
-6. **质疑与验证** - 审视 Codex 结论
-7. **输出结论** - 整合分析结果
+### >>> 强制前置：计划文件检测 <<<
+
+```
+1. Glob('.claude/plans/*.md')     # 项目级
+2. Glob('~/.claude/plans/*.md')   # 全局级
+3. 若找到：Read 最近的文件，判断相关性
+4. 若相关：记录绝对路径，PROMPT 中包含
+```
+
+---
+
+1. **确认任务类型** - 分析用户意图（代码审查/需求分析/问题定位）
+2. **收集上下文** - 获取相关文件、错误信息、需求描述
+3. **初步分析**（必须）- 输出你的初步判断
+4. **调用 Codex** - 使用 `mcp__codex__codex` 工具，**若有相关计划则在 PROMPT 中包含计划文件路径**
+5. **质疑与验证** - 审视 Codex 结论
+6. **输出结论** - 整合分析结果
 
 **完整的工作流程和 Codex 调用模板详见：**`reference/shared-patterns.md`
 

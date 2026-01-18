@@ -15,7 +15,7 @@ argument-hint: [symptom] [error] [plan=<path>] [session=<id>]
 
 ## 核心规则（简要）
 
-遵循 Codex 协作的5条核心规则：先自检、提问、安全调用、只读输出、质疑验证。
+遵循 Codex 协作的 6 条核心规则：计划检测优先、先自检、提问、安全调用、只读输出、质疑验证。
 
 *详见 reference/shared-patterns.md 的"核心规则"章节*
 
@@ -27,7 +27,7 @@ argument-hint: [symptom] [error] [plan=<path>] [session=<id>]
 - **问题症状**：错误信息、异常、日志片段
 - **可疑路径**：相关文件或模块
 - **可选参数**：
-  - `plan=<path>` - 指定排查计划文件（自动检测 `.claude/plans/*.md`，`plan=none` 禁用）
+  - `plan=<path>` - 指定排查计划文件（自动检测项目级 `.claude/plans/*.md` 和全局级 `~/.claude/plans/*.md`，`plan=none` 禁用）
   - `session=<id>` - 继续之前的会话
 
 **排查计划用途**：若检测到排查计划文件，将读取已排查的假设和进展，避免重复验证已排除的假设。

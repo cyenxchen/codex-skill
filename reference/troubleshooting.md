@@ -24,21 +24,25 @@ claude mcp list
 
 ---
 
-#### Q2: 如何安装 Codex 协作插件？
+#### Q2: 如何安装 Codex 协作 Skill？
 
 **答案**：
-```bash
-# 克隆仓库
-git clone https://github.com/GuDaStudio/codexmcp.git
-cd codexmcp
 
-# 安装插件
-claude plugin install ./skill
+**方法一：Release 下载（推荐）**
+```bash
+curl -L https://github.com/cyenxchen/codex-skill/releases/latest/download/codex-skill.zip -o codex-skill.zip
+unzip codex-skill.zip -d ~/.claude/skills/
+```
+
+**方法二：Git Clone + Symlink**
+```bash
+git clone https://github.com/cyenxchen/codex-skill.git
+ln -s $(pwd)/codex-skill ~/.claude/skills/codex
 ```
 
 **检查点**：
-- 安装成功后会显示确认信息
-- 可以使用 `claude plugin list` 查看已安装的插件
+- 确认 `~/.claude/skills/codex/` 目录存在
+- 确认包含 SKILL.md 文件
 
 ---
 

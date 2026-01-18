@@ -15,7 +15,7 @@ argument-hint: [path|diff] [focus=security|perf|style] [plan=<path>] [session=<i
 
 ## 核心规则（简要）
 
-遵循 Codex 协作的5条核心规则：先自检、提问、安全调用、只读输出、质疑验证。
+遵循 Codex 协作的 6 条核心规则：计划检测优先、先自检、提问、安全调用、只读输出、质疑验证。
 
 *详见 reference/shared-patterns.md 的"核心规则"章节*
 
@@ -27,7 +27,7 @@ argument-hint: [path|diff] [focus=security|perf|style] [plan=<path>] [session=<i
 - **审查目标**：文件路径 | `git diff` | `git diff HEAD~N`
 - **可选参数**：
   - `focus=security|perf|style` - 重点关注维度
-  - `plan=<path>` - 指定计划文件（自动检测 `.claude/plans/*.md`，`plan=none` 禁用）
+  - `plan=<path>` - 指定计划文件（自动检测项目级 `.claude/plans/*.md` 和全局级 `~/.claude/plans/*.md`，`plan=none` 禁用）
   - `session=<id>` - 继续之前的会话
 
 **计划文件用途**：审查时对照计划中的验收标准，检查实现是否符合预期。

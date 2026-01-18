@@ -7,20 +7,20 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 This is a **Claude Code Skill** (pure documentation, no code) that enables Claude-Codex collaboration for code review, implementation planning, and debugging via MCP tools.
 
 **Skill Name**: `codex`
-**Version**: 0.1.0
+**Version**: 0.2.0
 **Prerequisite**: CodexMCP server must be installed
 
 ## Architecture
 
 ```
-codex/
+codex-skill/
 ├── SKILL.md                    # Skill definition (YAML frontmatter with hooks + quick start)
 ├── commands/                   # Command specifications
 │   ├── codex-review.md         # Code review workflow
 │   ├── codex-plan.md           # Implementation planning workflow
 │   └── codex-debug.md          # Debug/root cause analysis workflow
 ├── reference/                  # Core documentation
-│   ├── shared-patterns.md      # 5 core rules, 6-step workflow, PROMPT templates
+│   ├── shared-patterns.md      # 6 core rules (including rule 0), 6-step workflow, PROMPT templates
 │   ├── examples.md             # Real-world usage examples
 │   └── troubleshooting.md      # FAQ and known limitations
 └── .github/workflows/
@@ -36,6 +36,7 @@ The skill uses these key configurations:
 
 ## Core Collaboration Rules (Must Follow)
 
+0. **Plan Detection First** - Check `.claude/plans/*.md` and `~/.claude/plans/*.md` before calling Codex
 1. **Analyze First** - Output preliminary analysis BEFORE calling Codex
 2. **Ask When Unclear** - Request clarification if information is insufficient
 3. **Read-Only Sandbox** - Always use `sandbox="read-only"` for `mcp__codex__codex`
