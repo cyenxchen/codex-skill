@@ -48,7 +48,7 @@ hooks:
 
 在开始 Codex 协作任务前，**必须**按以下顺序检测计划文件：
 1. 项目级：`Glob('.claude/plans/*.md')`
-2. 全局级：`Glob('~/.claude/plans/*.md')`
+2. 全局级：`Glob('$HOME/.claude/plans/*.md')`（需先展开 $HOME）
 
 若找到计划文件，Read 最近修改的文件判断与当前任务的相关性，相关则传递给 Codex。
 
@@ -72,7 +72,7 @@ Codex 协作遵循以下工作流程：
 
 ```
 1. Glob('.claude/plans/*.md')     # 项目级
-2. Glob('~/.claude/plans/*.md')   # 全局级
+2. Glob('$HOME/.claude/plans/*.md')   # 全局级，需先展开 $HOME
 3. 若找到：Read 最近的文件，判断相关性
 4. 若相关：记录绝对路径，PROMPT 中包含
 ```
